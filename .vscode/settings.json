@@ -1,0 +1,11 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+    },
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+    "templateGenerator.fields.author": "mamh1019@gmail.com",
+    "templateGenerator.fields.email": "mamh1019@gmail.com"
+}
