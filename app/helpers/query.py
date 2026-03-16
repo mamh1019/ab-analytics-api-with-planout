@@ -44,30 +44,3 @@ class Query:
         builders.append(" AND ".join(where_cols))
 
         return " ".join(builders)
-
-    @staticmethod
-    def list_to_select_query_str(in_params_list: list):
-        return ",".join(map(str, in_params_list))
-
-    @staticmethod
-    def list_to_in_query_str(in_params_list: list):
-        return "'" + "','".join(map(str, in_params_list)) + "'"
-
-    @staticmethod
-    def suppose_uid(table_fields: list):
-        uid_key = "uid"
-        if "uid" not in table_fields:
-            for field in table_fields:
-                if "uid" in field:
-                    uid_key = field
-                    break
-        return uid_key
-
-    @staticmethod
-    def suppose_platform(table_fields: list):
-        if "device" in table_fields:
-            return "device"
-        elif "platform" in table_fields:
-            return "platform"
-        else:
-            raise Exception("not exists platform field")

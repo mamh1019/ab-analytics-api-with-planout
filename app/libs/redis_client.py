@@ -4,7 +4,7 @@
 # FastAPI lifespan + redis.asyncio 버전 (namespace 스타일)
 
 import redis.asyncio as aioredis
-from typing import Optional, Dict, Any
+from typing import Optional
 from fastapi import Request
 from config.settings import settings
 from app.db.interface import IUser
@@ -43,29 +43,6 @@ class RedisClient:
         if r is None:
             raise RuntimeError("Redis not initialized. Did you wire lifespan?")
         return r
-
-
-# ---------- String / Hash Ops ----------
-async def r_get(request: Request, key: str) -> Optional[str]:
-    return await RedisClient.from_request(request).get(key)
-
-
-async def r_set(request: Request, key: str, value: Any, expire: Optional[int] = None):
-    return await RedisClient.from_request(request).set(key, value, ex=expire)
-
-
-async def hgetall(request: Request, key: str) -> Dict[str, str]:
-    return await RedisClient.from_request(request).hgetall(key)
-
-
-async def hset(
-    request: Request, key: str, mapping: Dict[str, Any], expire: Optional[int] = None
-) -> int:
-    cli = RedisClient.from_request(request)
-    n = await cli.hset(name=key, mapping=mapping)
-    if expire is not None:
-        await cli.expire(key, expire)
-    return n
 
 
 # ---------- Composite Helper ----------
